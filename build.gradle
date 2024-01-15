@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group 'org.sideproject'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+// QueryDSL 메타데이터 생성을 위한 설정
+sourceSets {
+    main.java.srcDirs += 'build/generated'
+}
+
+configurations {
+    querydslapt
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Thymeleaf 템플릿 엔진
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // JPA를 위한 Spring Boot Starter Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // H2 Database - 개발용 인메모리 데이터베이스
+    runtimeOnly 'com.h2database:h2'
+    implementation 'mysql:mysql-connector-java' // runtimeOnly했더니 컴파일 문제인지 서버 켤때  에러나서 수정
+
+    // aws 설정
+    // s3
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.261'
+
+    // SpringFox Swagger 2
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    // Kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
+    querydslapt 'com.querydsl:querydsl-apt'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+// Lombok과 QueryDSL을 위한 설정
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
+}
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorPath += configurations.querydslapt
+}
