@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-@Table(name = "job_ application_questions")
+@Table(name = "job_application_questions")
 public class JobApplicationQuestion extends Auditable{
 
     @Id
