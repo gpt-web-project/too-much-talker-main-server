@@ -54,9 +54,14 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "이력사항 조회하기",
-            notes = "",
+            notes = "// 경험 유형 코드\n" +
+                    "    EDUCATION(\"학력사항\", \"EDUCATION\"),\n" +
+                    "    EXPERIENCE(\"경력사항\", \"EXPERIENCE\"),\n" +
+                    "    LICENSES(\"자격증\", \"LICENSES\"),\n" +
+                    "    ACTIVITY(\"학내외활동사항\", \"ACTIVITY\"),\n" +
+                    "    ETC(\"기타\", \"ETC\");",
             response = ResumeResponse.class)
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     private ResponseEntity getUserResume(@PathVariable("userId") Long userId) {
 
         List<EachResume> mockUserResumeList = Arrays.asList(
