@@ -23,7 +23,7 @@ import java.util.List;
 public class PersonalStatementController {
 
     @ApiOperation(value = "기업 정보 입력하기(캡쳐로 업로드), PNG & JPG 만 가능",
-            notes = "",
+            notes = "지원하지않는 기능 (mvp이후 동작함)",
             response = CompanyDetailsResponse.class)
     @PostMapping("/job-postings/pdf-auto-map")
     private ResponseEntity pdfToJob(@RequestParam("file") MultipartFile file) {
