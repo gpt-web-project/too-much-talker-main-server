@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.sideproject.model.dto.request.LoginRequest;
 import org.sideproject.model.dto.response.LoginResponse;
+import org.sideproject.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/account")
 @Api(value = "/account", tags = "사용자 계정 관련 기능")
 public class AccountController {
+    private final AccountService accountService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ApiOperation(value="로그인 API"
@@ -24,9 +26,9 @@ public class AccountController {
             , response = LoginResponse.class)
     @PostMapping("/login")
     private ResponseEntity login(@RequestBody LoginRequest loginRequest){
-        long tempId = 0L;
+        long userId = accountService.login(loginRequest);
         return new ResponseEntity(
-                new LoginResponse(tempId),
+                new LoginResponse(userId),
                 HttpStatus.OK
         );
     }
