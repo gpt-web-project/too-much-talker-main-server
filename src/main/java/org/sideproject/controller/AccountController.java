@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/account")
@@ -25,7 +27,7 @@ public class AccountController {
             ", 추후 요청을 너무 많이 보내는 유저는 벤먹이기위해 최초 로그인 ip도 같이보내주세요"
             , response = LoginResponse.class)
     @PostMapping("/login")
-    private ResponseEntity login(@RequestBody LoginRequest loginRequest){
+    private ResponseEntity login(@Valid @RequestBody LoginRequest loginRequest){
         long userId = accountService.login(loginRequest);
         return new ResponseEntity(
                 new LoginResponse(userId),
@@ -37,10 +39,9 @@ public class AccountController {
             , notes=""
             , response = LoginResponse.class)
     @PostMapping("/create-account")
-    private ResponseEntity createAccount(@RequestBody LoginRequest loginRequest){
-        long tempId = 0L;
+    private ResponseEntity createAccount(@Valid @RequestBody LoginRequest loginRequest){
+        accountService.createAccount(loginRequest);
         return new ResponseEntity(
-                new LoginResponse(tempId),
                 HttpStatus.OK
         );
     }
@@ -49,7 +50,7 @@ public class AccountController {
             , notes="당장 사용하지 않을거지만 이후 로그인IP를 관리할 예정입니다.(mvp이후)"
             , response = LoginResponse.class)
     @PostMapping("/login-history")
-    private ResponseEntity countLoginHistory(@RequestBody LoginRequest loginRequest){
+    private ResponseEntity countLoginHistory(@Valid @RequestBody LoginRequest loginRequest){
         long tempId = 0L;
         return new ResponseEntity(
                 new LoginResponse(tempId),

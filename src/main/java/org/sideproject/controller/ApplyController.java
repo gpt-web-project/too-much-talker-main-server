@@ -7,7 +7,9 @@ import org.sideproject.model.dto.EachUserJobApplyQuestion;
 import org.sideproject.model.dto.request.JobApplicationRequest;
 import org.sideproject.model.dto.response.CompanyDetailsResponse;
 import org.sideproject.model.dto.response.JobAnswerResponse;
-import org.sideproject.model.dto.response.ResumeResponse;
+import org.sideproject.service.ApplyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/application")
 @Api(value = "/application", tags = "자기소개서 작성 관련 기능")
-public class PersonalStatementController {
+public class ApplyController {
+    private final ApplyService applyService;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ApiOperation(value = "기업 정보 입력하기(캡쳐로 업로드), PNG & JPG 만 가능",
             notes = "지원하지않는 기능 (mvp이후 동작함)",

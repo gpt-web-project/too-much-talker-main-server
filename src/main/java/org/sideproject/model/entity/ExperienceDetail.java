@@ -26,7 +26,9 @@ public class ExperienceDetail {
     @JoinColumn(name = "resume_id")
     private Resume resume;
 
+    @Column(nullable = true)
     private String description;
 
+    @Column(nullable = true)
     private String skillHighlight; // 강조하고싶은 역량
 }
