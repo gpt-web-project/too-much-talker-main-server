@@ -18,6 +18,5 @@ public class LoginRequest {
     @NotEmpty
     private String password;
 
-    @Null
     private String initialLoginIp; // Todo. ip get
 }

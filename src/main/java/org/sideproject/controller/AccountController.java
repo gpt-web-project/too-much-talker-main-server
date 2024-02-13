@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.sideproject.model.dto.request.LoginRequest;
 import org.sideproject.model.dto.response.LoginResponse;
+import org.sideproject.model.metadata.Message;
 import org.sideproject.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,8 @@ public class AccountController {
     private ResponseEntity createAccount(@Valid @RequestBody LoginRequest loginRequest){
         accountService.createAccount(loginRequest);
         return new ResponseEntity(
-                HttpStatus.OK
+                Message.OK
+                ,HttpStatus.OK
         );
     }
 

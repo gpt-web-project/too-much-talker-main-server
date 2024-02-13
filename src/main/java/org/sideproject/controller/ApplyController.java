@@ -7,6 +7,7 @@ import org.sideproject.model.dto.EachUserJobApplyQuestion;
 import org.sideproject.model.dto.request.JobApplicationRequest;
 import org.sideproject.model.dto.response.CompanyDetailsResponse;
 import org.sideproject.model.dto.response.JobAnswerResponse;
+import org.sideproject.model.metadata.Message;
 import org.sideproject.service.ApplyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,9 +54,11 @@ public class ApplyController {
     @ApiOperation(value = "자기소개서 요청 정보 일괄 저장",
             notes = "기업정보와 자기소개 질문을 일괄 저장하는 기능")
     @PostMapping("")
-    private ResponseEntity saveJobInfo(@RequestBody JobApplicationRequest jobInfoApplyRequest) {
+    private ResponseEntity saveJobInfo(@Valid @RequestBody JobApplicationRequest jobInfoApplyRequest) {
+        applyService.saveJobInfo(jobInfoApplyRequest);
         return new ResponseEntity<>(
-                HttpStatus.OK
+                Message.OK
+                ,HttpStatus.OK
         );
     }
 
@@ -63,18 +67,12 @@ public class ApplyController {
             response = JobAnswerResponse.class)
     @GetMapping("/{userId}")
     private ResponseEntity getApplyAnswerForQuestion(@PathVariable("userId") Long userId) {
-        // 목 데이터 생성
-        List<EachUserJobApplyQuestion> mockData = Arrays.asList(
-                new EachUserJobApplyQuestion("질문1", "답변1"),
-                new EachUserJobApplyQuestion("질문2", "답변2"),
-                new EachUserJobApplyQuestion("질문3", "답변3")
-        );
 
-        // 목 데이터를 사용하여 JobAnswerResponse 객체 생성
-        JobAnswerResponse jobAnswerResponse = new JobAnswerResponse(mockData);
+        JobAnswerResponse jobAnswerResponse = applyService.getAnswer(userId);
 
-        // ResponseEntity로 감싸서 반환
-        return new ResponseEntity<>(jobAnswerResponse, HttpStatus.OK);
+
+        return new ResponseEntity<>(jobAnswerResponse
+                , HttpStatus.OK);
     }
 
 }

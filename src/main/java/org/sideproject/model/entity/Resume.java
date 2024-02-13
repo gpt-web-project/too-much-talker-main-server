@@ -21,4 +21,9 @@ public class Resume  extends Auditable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Resume(User user){
+        this.user = user;
+    }
+
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.sideproject.model.dto.EachResume;
 import org.sideproject.model.dto.request.ResumeRequest;
 import org.sideproject.model.dto.response.ResumeResponse;
+import org.sideproject.model.metadata.Message;
 import org.sideproject.model.metadata.WorkCode;
 import org.sideproject.service.ApplyService;
 import org.sideproject.service.ResumeService;
@@ -49,12 +50,13 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "작성한 이력사항 저장하기",
-            notes = "")
+            notes = "날짜데이터는 일자는 저장하지않지만 default값을 yyyy-mm-dd로 주세요 (dd는 01로 통일), \"endDate\": \"2022-06-01\" 이렇게 주시라는")
     @PostMapping("")
     private ResponseEntity saveUserResume(@Valid @RequestBody ResumeRequest resumeRequest) {
-
+        resumeService.saveUserResume(resumeRequest);
         return new ResponseEntity<>(
-                HttpStatus.OK
+                Message.OK
+                ,HttpStatus.OK
         );
     }
 
@@ -69,15 +71,10 @@ public class ResumeController {
     @GetMapping("/{userId}")
     private ResponseEntity getUserResume(@PathVariable("userId") Long userId) {
 
-        List<EachResume> mockUserResumeList = Arrays.asList(
-                new EachResume(1L,1L, "대학교", "학생","", LocalDate.of(2018, 3, 1), LocalDate.of(2022, 2, 28), WorkCode.EDUCATION),
-                new EachResume(1L,2L, "XYZ 회사", "개발자","", LocalDate.of(2022, 3, 1), null, WorkCode.EXPERIENCE)
-        );
-
-        ResumeResponse mockResponse = new ResumeResponse(mockUserResumeList);
+        ResumeResponse result = resumeService.getUserResume(userId);
 
         return new ResponseEntity<>(
-                mockResponse,
+                result,
                 HttpStatus.OK
         );
     }
