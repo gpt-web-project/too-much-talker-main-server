@@ -14,8 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class JobApplicationRequest {
-    @NotEmpty
-    long userId;
+    @NotNull
+    Long userId;
 
     @NotEmpty
     String companyName;
