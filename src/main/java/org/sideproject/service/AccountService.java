@@ -1,6 +1,7 @@
 package org.sideproject.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sideproject.model.dto.request.CreateAccountRequest;
 import org.sideproject.model.dto.request.LoginRequest;
 import org.sideproject.model.entity.User;
 import org.sideproject.repository.UserRepository;
@@ -25,16 +26,16 @@ public class AccountService {
     }
 
     @Transactional
-    public void createAccount(LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
+    public void createAccount(CreateAccountRequest accountRequest) {
+        String username = accountRequest.getUsername();
         // username 중복 검사
         userRepository.findByUsername(username).ifPresent(user -> {
             throw new RuntimeException("이미 존재하는 사용자명입니다.");
         });
 
         // 나머지 회원가입 로직...
-        String password = loginRequest.getPassword();
-        String createdIp = loginRequest.getInitialLoginIp();
+        String password = accountRequest.getPassword();
+        String createdIp = accountRequest.getInitialLoginIp();
         User newUser = new User(username, password, createdIp);
         userRepository.save(newUser);
     }

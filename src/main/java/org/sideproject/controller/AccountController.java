@@ -3,6 +3,7 @@ package org.sideproject.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.sideproject.model.dto.request.CreateAccountRequest;
 import org.sideproject.model.dto.request.LoginRequest;
 import org.sideproject.model.dto.response.LoginResponse;
 import org.sideproject.model.metadata.Message;
@@ -40,8 +41,8 @@ public class AccountController {
             , notes=""
             , response = LoginResponse.class)
     @PostMapping("/create-account")
-    private ResponseEntity createAccount(@Valid @RequestBody LoginRequest loginRequest){
-        accountService.createAccount(loginRequest);
+    private ResponseEntity createAccount(@Valid @RequestBody CreateAccountRequest accountRequest){
+        accountService.createAccount(accountRequest);
         return new ResponseEntity(
                 Message.OK
                 ,HttpStatus.OK
