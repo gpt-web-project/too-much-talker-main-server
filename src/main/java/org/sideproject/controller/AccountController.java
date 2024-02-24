@@ -30,9 +30,9 @@ public class AccountController {
             , response = LoginResponse.class)
     @PostMapping("/login")
     private ResponseEntity login(@Valid @RequestBody LoginRequest loginRequest){
-        long userId = accountService.login(loginRequest);
+        LoginResponse user = accountService.login(loginRequest);
         return new ResponseEntity(
-                new LoginResponse(userId),
+                user,
                 HttpStatus.OK
         );
     }

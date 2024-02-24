@@ -36,15 +36,8 @@ public class ResumeController {
     @PostMapping("/file-upload")
     private ResponseEntity pdfToResume(@RequestParam("file") MultipartFile file) {
 
-        List<EachResume> mockUserResumeList = Arrays.asList(
-                new EachResume(1L,1L, "대학교", "학생","", LocalDate.of(2018, 3, 1), LocalDate.of(2022, 2, 28), WorkCode.EDUCATION),
-                new EachResume(1L,2L, "XYZ 회사", "개발자","", LocalDate.of(2022, 3, 1), null, WorkCode.EXPERIENCE)
-        );
-
-        ResumeResponse mockResponse = new ResumeResponse(mockUserResumeList);
 
         return new ResponseEntity<>(
-                mockResponse,
                 HttpStatus.OK
         );
     }

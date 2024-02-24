@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -29,6 +30,14 @@ public class ResumeService {
     public void saveUserResume(ResumeRequest resumeRequest) {
 
         User user = userService.getUserById(resumeRequest.getUserId());
+
+        Optional<List<Resume>> resumes = resumeRepository.findAllByUser_Id(resumeRequest.getUserId());
+
+        if (resumes.isPresent() && !resumes.get().isEmpty()) {
+            // 존재한다면 해당 레코드를 모두 삭제합니다.
+            resumeRepository.deleteByUserId(resumeRequest.getUserId());
+        }
+
         Resume savedResume = resumeRepository.save(new Resume(user));
 
         List<ExperienceHistory> savedHistories = new ArrayList<>();
@@ -49,7 +58,7 @@ public class ResumeService {
     }
 
     public ResumeResponse getUserResume(long userId){
-        Resume key = resumeRepository.findTopByUser_IdOrderByCreatedAtDesc(userId).get();
+        Resume key = resumeRepository.findFirstByUserIdOrderByCreatedAtDesc(userId).get();
 
         List<ExperienceHistory> experienceHistoryList = experienceHistoryRepository.findAllByResume_Id(key.getId());
         List<EachResume> returnList = new ArrayList<>();
