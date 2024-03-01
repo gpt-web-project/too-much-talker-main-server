@@ -46,7 +46,7 @@ public class ApplyService {
         }
 
         jobApplicationInfoRepository.save(jobApplicationInfo);
-        trigger(jobInfoApplyRequest.getUserId());
+//        trigger(jobInfoApplyRequest.getUserId());
     }
 
     private void trigger(Long userId) {
@@ -86,7 +86,7 @@ public class ApplyService {
 
         // 첫 번째 질문의 답변이 없는 경우 처리
         if (applicationInfo.getQuestions().isEmpty() || applicationInfo.getQuestions().get(0).getAnswer() == null) {
-            trigger(userId);
+//            trigger(userId);
             throw new RuntimeException("AI가 답변 작성중입니다.");
         } else {
             List<EachUserJobApplyQuestion> answerList = new ArrayList<>();
