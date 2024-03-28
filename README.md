@@ -20,10 +20,10 @@ Python : langchain, …
 
 **🦜 Members**
 
-**원가연***, Back-End Developer, henzel1013@gmail.com  
-**차유진***, Prompt Engineer, chaujin00@gmail.com  
-**길하균***, Project Manager + Prompt Engineer, ghaguniv@gmail.com  
-**최용현****, Front-End Developer, chldydgus777@kakao.com  
+**원가연**, Back-End Developer, henzel1013@gmail.com  
+**차유진**, Prompt Engineer, chaujin00@gmail.com  
+**길하균**, Project Manager + Prompt Engineer, ghaguniv@gmail.com  
+**최용현**, Front-End Developer, chldydgus777@kakao.com  
 
 
 주요 테스크
