@@ -26,7 +26,7 @@ Python : langchain, …
 **최용현**, Front-End Developer, chldydgus777@kakao.com  
 
 
-주요 테스크
+주요 테스크 및 트러블슈팅
 =============
 
 ### **테스크명 :** API 명세서 작성하기
