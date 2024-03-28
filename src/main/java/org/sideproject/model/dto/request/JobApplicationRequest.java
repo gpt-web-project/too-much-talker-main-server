@@ -6,17 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class LoginRequest {
-    @NotEmpty
-    private String username;
-    @NotEmpty
-    private String password;
+public class JobApplicationRequest {
+    @NotNull
+    Long userId;
 
-//    private String initialLoginIp; // Todo. ip get
+    @NotEmpty
+    String companyName;
+
+    @NotEmpty
+    String jobTitle;
+    String jobDescription;
+    String qualificationRequirements;
+
+    @NotNull
+    List<String> questionList;
 }

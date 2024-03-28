@@ -3,12 +3,14 @@ package org.sideproject.model.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
+@Setter
 @Table(name = "job_application_questions")
 public class JobApplicationQuestion extends Auditable{
 
@@ -24,4 +26,8 @@ public class JobApplicationQuestion extends Auditable{
     @Column(nullable = false)
     private String question;
     private String answer;
+
+    public JobApplicationQuestion(String question){
+        this.question = question;
+    }
 }

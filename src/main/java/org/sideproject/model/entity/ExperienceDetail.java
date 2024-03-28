@@ -18,7 +18,7 @@ public class ExperienceDetail {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "experience_id")
     private ExperienceHistory experienceHistory;
 
@@ -26,7 +26,19 @@ public class ExperienceDetail {
     @JoinColumn(name = "resume_id")
     private Resume resume;
 
+    @Column(nullable = true)
     private String description;
 
+    @Column(nullable = true)
     private String skillHighlight; // 강조하고싶은 역량
+
+    public ExperienceDetail(ExperienceHistory experienceHistory, Resume resume, String description) {
+        this.experienceHistory = experienceHistory;
+        this.resume = resume;
+        this.description = description;
+    }
+
+    public ExperienceDetail(String description){
+        this.description = description;
+    }
 }

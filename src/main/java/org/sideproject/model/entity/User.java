@@ -3,6 +3,8 @@ package org.sideproject.model.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.sideproject.repository.UserRepository;
 
 import javax.persistence.*;
 
@@ -17,7 +19,7 @@ public class User extends Auditable{
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
