@@ -46,7 +46,7 @@ public class ApplyService {
         }
 
         jobApplicationInfoRepository.save(jobApplicationInfo);
-//        trigger(jobInfoApplyRequest.getUserId());
+        trigger(jobInfoApplyRequest.getUserId());
     }
 
     private void trigger(Long userId) {
@@ -71,31 +71,29 @@ public class ApplyService {
                 });
     }
 
-    public JobAnswerResponse getAnswer(Long userId){
-        // 페이지 객체 직접 처리
-        // Todo. 리스트로 내려올때 처리
-        Page<JobApplicationInfo> applicationInfoPage = jobApplicationInfoRepository.findLatestByUserId(userId, PageRequest.of(0, 1));
+    public List<JobAnswerResponse> getAnswer(Long userId){
+        List<JobAnswerResponse> responses = new ArrayList<>();
 
-        // 페이지 내용이 비어 있는지 확인
-        if (!applicationInfoPage.hasContent()) {
+        // 모든 JobApplicationInfo 객체 조회
+        List<JobApplicationInfo> applicationInfos = jobApplicationInfoRepository.findAllByUserId(userId);
+
+        if (applicationInfos.isEmpty()) {
             throw new RuntimeException("자기소개 작성 요청을 해주세요.");
         }
 
-        // 페이지에서 첫 번째 JobApplicationInfo 객체를 가져옴
-        JobApplicationInfo applicationInfo = applicationInfoPage.getContent().get(0);
-
-        // 첫 번째 질문의 답변이 없는 경우 처리
-        if (applicationInfo.getQuestions().isEmpty() || applicationInfo.getQuestions().get(0).getAnswer() == null) {
-//            trigger(userId);
-            throw new RuntimeException("AI가 답변 작성중입니다.");
-        } else {
+        for (JobApplicationInfo applicationInfo : applicationInfos) {
             List<EachUserJobApplyQuestion> answerList = new ArrayList<>();
-            // 모든 질문과 답변을 처리
             for (JobApplicationQuestion each : applicationInfo.getQuestions()) {
-                answerList.add(new EachUserJobApplyQuestion(each.getQuestion(), each.getAnswer()));
+                // 답변이 있는지 확인, 없으면 "AI가 답변 작성중입니다."
+                String answer = each.getAnswer() != null ? each.getAnswer() : "AI가 답변 작성중입니다.";
+                answerList.add(new EachUserJobApplyQuestion(each.getQuestion(), answer));
             }
-            // 응답 객체 생성 및 반환
-            return new JobAnswerResponse(answerList, applicationInfo.getCompanyName(), applicationInfo.getJobTitle());
+            // 각 JobApplicationInfo 객체에 대한 응답을 리스트에 추가
+            responses.add(new JobAnswerResponse(answerList, applicationInfo.getCompanyName(), applicationInfo.getJobTitle()));
         }
+
+        return responses;
     }
+
+
 }

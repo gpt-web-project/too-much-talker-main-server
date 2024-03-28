@@ -17,4 +17,6 @@ public interface JobApplicationInfoRepository extends JpaRepository<JobApplicati
 
     @Query("SELECT r FROM JobApplicationInfo r WHERE r.user.id = :userId ORDER BY r.createdAt DESC")
     Page<JobApplicationInfo> findLatestByUserId(@Param("userId") Long userId, Pageable pageable);
+
+    List<JobApplicationInfo> findAllByUserId(Long userId);
 }

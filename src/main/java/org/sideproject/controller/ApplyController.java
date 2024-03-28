@@ -66,13 +66,9 @@ public class ApplyController {
             notes = "자기소개서 작성 요청 결과 조회",
             response = JobAnswerResponse.class)
     @GetMapping("/{userId}")
-    private ResponseEntity getApplyAnswerForQuestion(@PathVariable("userId") Long userId) {
-
-        JobAnswerResponse jobAnswerResponse = applyService.getAnswer(userId);
-
-
-        return new ResponseEntity<>(jobAnswerResponse
-                , HttpStatus.OK);
+    public ResponseEntity<List<JobAnswerResponse>> getApplyAnswerForQuestion(@PathVariable("userId") Long userId) {
+        List<JobAnswerResponse> jobAnswerResponses = applyService.getAnswer(userId);
+        return new ResponseEntity<>(jobAnswerResponses, HttpStatus.OK);
     }
 
 }
